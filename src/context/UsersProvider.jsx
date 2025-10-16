@@ -38,18 +38,22 @@ export function UsersProvider({ initialUsers = [], children }) {
   }, [editedUsers]);
 
   const value = useMemo(() => {
-    const merged = [
-      ...added,
-      ...serverUsers.filter((u) => !deletedIds.includes(String(u.id))),
-    ];
+    // Merge added and serverUsers
+    let merged = [...added, ...serverUsers];
 
-    const editedMerged = merged.map((user) => {
+    // Apply edits
+    merged = merged.map((user) => {
       const edited = editedUsers.find((e) => String(e.id) === String(user.id));
       return edited ? { ...user, ...edited } : user;
     });
 
+    // Remove deleted users
+    const finalUsers = merged.filter(
+      (user) => !deletedIds.includes(String(user.id))
+    );
+
     return {
-      users: editedMerged,
+      users: finalUsers,
       addUserLocal: (u) =>
         setAdded((prev) => [
           { ...u, id: u.id || `local-${Date.now()}` },
