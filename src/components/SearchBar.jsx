@@ -24,6 +24,14 @@ export default function SearchBar({ initialQuery = "" }) {
     router.push("/?" + p.toString());
   }
 
+  function clearSearch() {
+    setQ("");
+    const p = new URLSearchParams(params.toString());
+    p.delete("q");
+    p.set("page", "1");
+    router.push("/?" + p.toString());
+  }
+
   return (
     <form onSubmit={onSubmit} className="flex gap-3">
       <div className="relative flex-1">
@@ -46,8 +54,30 @@ export default function SearchBar({ initialQuery = "" }) {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search by name, username, email, company..."
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all"
+          className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all"
         />
+        {q && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-slate-600 text-slate-400 transition-colors cursor-pointer"
+            aria-label="Clear search"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        )}
       </div>
       <button
         type="submit"
