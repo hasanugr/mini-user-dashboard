@@ -9,6 +9,7 @@ import {
   STORAGE_KEYS,
   VALIDATION_PATTERNS,
   FIELD_LIMITS,
+  VALIDATION_MESSAGES,
 } from "@/lib/constants";
 
 /**
@@ -219,7 +220,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             minLength={FIELD_LIMITS.NAME.min}
             maxLength={FIELD_LIMITS.NAME.max}
             placeholder="e.g., John Doe"
-            validationMessage={`Full name must be ${FIELD_LIMITS.NAME.min}-${FIELD_LIMITS.NAME.max} characters`}
+            validationMessage={VALIDATION_MESSAGES.FULLNAME_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -238,7 +239,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             minLength={FIELD_LIMITS.USERNAME.min}
             maxLength={FIELD_LIMITS.USERNAME.max}
             placeholder="e.g., johndoe123"
-            validationMessage="Username: 3-20 characters, letters, numbers, underscore and dash only"
+            validationMessage={VALIDATION_MESSAGES.USERNAME_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -257,7 +258,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             pattern={VALIDATION_PATTERNS.EMAIL.source}
             maxLength={FIELD_LIMITS.EMAIL.max}
             placeholder="e.g., john@example.com"
-            validationMessage="Please enter a valid email address"
+            validationMessage={VALIDATION_MESSAGES.EMAIL_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -274,8 +275,8 @@ export default function UserForm({ mode = "create", initialUser }) {
             defaultValue={initialUser?.phone}
             pattern={VALIDATION_PATTERNS.PHONE.source}
             maxLength={FIELD_LIMITS.PHONE.max}
-            placeholder="e.g., 5551234567"
-            validationMessage="Please enter a valid phone number (numbers, spaces, +, -, (, ), . only)"
+            placeholder="e.g., +1 (555) 123-4567, 5543332211"
+            validationMessage={VALIDATION_MESSAGES.PHONE_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -293,7 +294,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             pattern={VALIDATION_PATTERNS.WEBSITE.source}
             maxLength={FIELD_LIMITS.WEBSITE.max}
             placeholder="e.g., example.com or https://example.com"
-            validationMessage="Please enter a valid website URL"
+            validationMessage={VALIDATION_MESSAGES.WEBSITE_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -383,7 +384,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             pattern={VALIDATION_PATTERNS.ZIPCODE.source}
             maxLength={FIELD_LIMITS.ZIPCODE.max}
             placeholder="e.g., 12345"
-            validationMessage="Zipcode format: 12345 or 12345-6789"
+            validationMessage={VALIDATION_MESSAGES.ZIPCODE_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -399,7 +400,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             defaultValue={initialUser?.address?.geo?.lat}
             pattern={VALIDATION_PATTERNS.COORDINATES.source}
             placeholder="e.g., -37.8136"
-            validationMessage="Enter valid latitude coordinate (numbers, dot, hyphen only)"
+            validationMessage={VALIDATION_MESSAGES.LAT_COORDINATES_INVALID}
             icon={
               <path
                 strokeLinecap="round"
@@ -415,7 +416,7 @@ export default function UserForm({ mode = "create", initialUser }) {
             defaultValue={initialUser?.address?.geo?.lng}
             pattern={VALIDATION_PATTERNS.COORDINATES.source}
             placeholder="e.g., 144.9631"
-            validationMessage="Enter valid longitude coordinate (numbers, dot, hyphen only)"
+            validationMessage={VALIDATION_MESSAGES.LNG_COORDINATES_INVALID}
             icon={
               <path
                 strokeLinecap="round"

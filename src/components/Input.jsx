@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { VALIDATION_MESSAGES } from "../lib/constants";
 
 /**
  * Input component with real-time validation, error messages, and accessible labels
@@ -42,19 +43,19 @@ export default function Input({
 
     // Required validation
     if (required && !value.trim()) {
-      setError("This field is required");
+      setError(VALIDATION_MESSAGES.REQUIRED);
       return false;
     }
 
     // Min length validation
     if (minLength && value.length > 0 && value.length < minLength) {
-      setError(`Must be at least ${minLength} characters`);
+      setError(VALIDATION_MESSAGES.MIN_LENGTH(minLength));
       return false;
     }
 
     // Max length validation
     if (maxLength && value.length > maxLength) {
-      setError(`Must not exceed ${maxLength} characters`);
+      setError(VALIDATION_MESSAGES.MAX_LENGTH(maxLength));
       return false;
     }
 
@@ -62,7 +63,7 @@ export default function Input({
     if (pattern && value.length > 0) {
       const regex = new RegExp(pattern);
       if (!regex.test(value)) {
-        setError(validationMessage || "Invalid format");
+        setError(validationMessage || VALIDATION_MESSAGES.INVALID_FORMAT);
         return false;
       }
     }
@@ -70,12 +71,12 @@ export default function Input({
     // HTML5 validation (email, url, etc.)
     if (input.validity && !input.validity.valid && value.length > 0) {
       if (input.validity.typeMismatch) {
-        if (type === "email") setError("Please enter a valid email address");
-        else if (type === "url") setError("Please enter a valid URL");
-        else if (type === "tel") setError("Please enter a valid phone number");
-        else setError(validationMessage || "Invalid format");
+        if (type === "email") setError(VALIDATION_MESSAGES.EMAIL_INVALID);
+        else if (type === "url") setError(VALIDATION_MESSAGES.WEBSITE_INVALID);
+        else if (type === "tel") setError(VALIDATION_MESSAGES.PHONE_INVALID);
+        else setError(validationMessage || VALIDATION_MESSAGES.INVALID_FORMAT);
       } else if (input.validity.patternMismatch) {
-        setError(validationMessage || "Invalid format");
+        setError(validationMessage || VALIDATION_MESSAGES.INVALID_FORMAT);
       }
       return false;
     }
@@ -98,8 +99,8 @@ export default function Input({
   // Prevent invalid characters for specific input types
   const handleKeyPress = (e) => {
     if (type === "tel") {
-      // Only allow numbers, spaces, +, -, (, ), .
-      if (!/[\d\s()+.-]/.test(e.key)) {
+      // Only allow numbers, spaces, +, -, (, ), ., x (for extensions like "x56442")
+      if (!/[\d\s()+.x-]/.test(e.key)) {
         e.preventDefault();
       }
     }
