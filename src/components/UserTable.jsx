@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useUsers } from "@/context/UsersProvider";
 import UserRow from "./UserRow";
 import Pagination from "./Pagination";
-import { filterUsers, paginateUsers } from "@/app/utils/utils";
+import { filterUsers, paginateUsers } from "@/utils/utils";
 
 /**
  * User table component with pagination and filtering
